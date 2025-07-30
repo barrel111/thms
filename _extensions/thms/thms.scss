@@ -1,0 +1,252 @@
+/* ========================================
+   THEOREM ENVIRONMENT STYLES
+   ======================================== */
+
+/* 
+   CUSTOMIZATION GUIDE:
+   
+   To customize colors, find the theorem type below and change:
+   - border-left-color: for the left border color
+   - background-color: for the background color
+   
+   To adjust spacing, modify the values in the base styles section.
+   To change the proof triangle, edit the ::before content.
+*/
+
+/* ========================================
+   BASE STYLES - All Theorem Types
+   ======================================== */
+
+div.theorem, 
+div.lemma, 
+div.corollary, 
+div.definition, 
+div.proposition, 
+div.conjecture, 
+div.remark, 
+div.example {
+  border-left: 4px solid;
+  background-color: #f8f9fa;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   THEOREM TYPE COLORS
+   ======================================== */
+
+/* Theorem - Pink/Magenta */
+div.theorem {
+  border-left-color: #d63384;
+}
+
+/* Lemma - Blue */
+div.lemma {
+  border-left-color: #8b93d6;
+  background-color: rgba(79, 70, 229, 0.1);
+}
+
+/* Corollary - Light Purple */
+div.corollary {
+  border-left-color: #7f95d1;
+  background-color: rgba(127, 149, 209, 0.15);
+}
+
+/* Definition - Red */
+div.definition {
+  border-left-color: #9C4F4F;
+  background-color: #F5EDED;
+}
+
+/* Proposition - Dark Blue */
+div.proposition {
+  border-left-color: #5D478B;
+  background-color: #EDEAF5;
+}
+
+/* Conjecture - Purple (inherits base background) */
+div.conjecture {
+  border-left-color: #6f42c1;
+}
+
+/* Remark - Dark Gray */
+div.remark {
+  border-left-color: #4A406A;
+  background-color: #F3F0F5;
+}
+
+/* Example - Green */
+div.example {
+  border-left-color: #4A704A;
+  background-color: #F5F6F5;
+}
+
+/* ========================================
+   THEOREM CONTENT STYLING
+   ======================================== */
+
+/* Title styling for all theorem types */
+div.theorem > p:first-child strong,
+div.lemma > p:first-child strong,
+div.corollary > p:first-child strong,
+div.definition > p:first-child strong,
+div.proposition > p:first-child strong,
+div.conjecture > p:first-child strong,
+div.remark > p:first-child strong,
+div.example > p:first-child strong {
+  font-weight: bold;
+  color: #212529;
+}
+
+/* Remove top margin from first paragraph */
+div.theorem > p:first-child,
+div.lemma > p:first-child,
+div.corollary > p:first-child,
+div.definition > p:first-child,
+div.proposition > p:first-child,
+div.conjecture > p:first-child,
+div.remark > p:first-child,
+div.example > p:first-child {
+  margin-top: 0;
+}
+
+/* Remove bottom margin from last paragraph */
+div.theorem > p:last-of-type,
+div.lemma > p:last-of-type,
+div.corollary > p:last-of-type,
+div.definition > p:last-of-type,
+div.proposition > p:last-of-type,
+div.conjecture > p:last-of-type,
+div.remark > p:last-of-type,
+div.example > p:last-of-type {
+  margin-bottom: 0;
+}
+
+/* Math content spacing */
+div.theorem .math,
+div.lemma .math,
+div.corollary .math,
+div.definition .math,
+div.proposition .math,
+div.conjecture .math,
+div.remark .math,
+div.example .math {
+  margin: 10px 0;
+}
+
+/* ========================================
+   PROOF STYLING
+   ======================================== */
+
+/* Proof container - clean, minimal styling */
+.proof:not(.remark) {
+  margin: 15px 0;
+  margin-left: 0.5em;
+  padding: 0;
+}
+
+/* Proof title - clickable header */
+.proof > p:first-child {
+  font-weight: normal;
+  font-style: italic;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  background-color: transparent;
+  transition: opacity 0.2s ease;
+  line-height: 1.4;
+}
+
+/* Hover effect for proof title */
+.proof:not(.remark) > p:first-child:hover {
+  opacity: 0.7;
+}
+
+/* Triangle indicator - shows expand/collapse state */
+.proof:not(.remark) > p:first-child::before {
+  content: "▶";
+  display: inline-block;
+  margin-right: 8px;
+  transition: transform 0.3s ease;
+  color: #6c757d;
+  font-size: 0.8em;
+}
+
+/* Rotate triangle when proof is expanded */
+.proof.expanded:not(.remark) > p:first-child::before {
+  transform: rotate(90deg);
+}
+
+/* Hide proof content by default */
+.proof:not(.remark) > *:not(:first-child) {
+  display: none;
+  margin: 0;
+  padding: 0;
+  padding-left: 1em;
+}
+
+/* Show proof content when expanded */
+.proof.expanded:not(.remark) > *:not(:first-child) {
+  display: block;
+  margin-top: 10px;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Remove extra margin from first content element */
+.proof:not(.remark) > p:first-child + * {
+  margin-top: 0;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(-5px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* ========================================
+   PROOF UTILITIES
+   ======================================== */
+
+/* QED symbol styling */
+.proof .qed {
+  float: right;
+  font-weight: bold;
+  color: #495057;
+}
+
+/* Clear floats after proof */
+.proof::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* ========================================
+   GLOBAL TYPOGRAPHY
+   ======================================== */
+
+/* Base paragraph styling */
+p {
+  line-height: 1.4em;
+  margin-bottom: 0.25em;
+}
+
+/* KaTeX, MathJax math font size override */
+.katex, .MathJax, mjx-container { 
+  font-size: 1em !important; 
+}
+
+

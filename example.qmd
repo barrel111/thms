@@ -1,0 +1,227 @@
+---
+title: "Thms Example"
+format:
+  html:
+    mainfont: EB Garamond
+filters:
+  - thms
+---
+
+## A Potpurri of Environments
+
+This filter adds proper theorem environments with collapsible proofs. 
+
+::: {#def-ac}
+An $M$-alternating component is an edge set that forms a connected subgraph of $G$ of maximum degree $2$, in which every degree-$2$ vertex belongs to exactly one edge of $M$.
+:::
+
+
+::: {.remark}
+A connected subgraph of $G$ of maximum degree $2$ must be either a cycle or a path. It is a cycle iff every vertex has degree $2$. A proof for this can be furnished by considering the longest path in the subgraph.
+:::
+
+
+::: {#prp-asympt-inv}
+Let $a, c > 0$ and and $b \in \mathbb{R}$. Define, for $x > 1$, $f(x) = c x^a ln^b x$. For $y$ sufficiently large, there is a unique $x$ with $y = f(x)$. Write $x = g(y)$ for such $y$. Asymptotically in $y$, $x \sim d y^{1/a}(\ln y)^{-b/a}$, where $d = a^{ a/b }c^{ - 1/a }$.
+:::
+
+::: {.proof key=@prp-asympt-inv}
+
+  Start by noting that, eventually the $x^a$ term dominates the polylogarithmic term to make $f$ increasing. More formally, note that
+
+\begin{align*}
+f'(x) &= a c \cdot x^{ a - 1 } \ln^b x + b c \cdot x^{ a - 1 } \ln^{ b - 1 } x \\ &= c x^{ a - 1 } \ln^b x \cdot \left(a + \frac{b}{ \ln x }\right)
+\end{align*}
+
+ There exists $x_0 > 1$ such that for all $x > x_0$, we have $|b|/a < \ln x$.  So, for all $x > x_0$, we have $f'(x) > 0$. Thus, $f'$ is eventually increasing.
+
+ For large $x$,
+ $$\ln y = \ln c + a \ln x + b \ln \ln x \sim a \ln x.$$
+
+ where the asymptotic equivalence is justified by $\ln c, \ln \ln x \in o(\ln x)$.
+
+Now, consider
+\begin{align*}
+y &= c x^a \ln^b x \\ \implies x &=  c^{ -1 / a } y^{ 1 / a }{ \ln x }^{ -b / a } \\ &\sim a^{ a / b } c^{ -1 / a } y^{ 1/a } { \ln y }^{ -b / a }
+\end{align*}
+
+:::
+
+::: {#exm-gaussian-integral}
+# Computing the Gaussian Integral
+
+Define $$I = \int_{-\infty}^\infty e^{-x^2} \, dx.$$
+
+Consider $I^2$ and use Tonelli's Theorem.
+\begin{align*}
+I^2 =  \left(\int_\mathbb{R} e^{-x^2}\, dx\right) \left(\int_\mathbb{R} e^{-y^2}\, dy\right) = \int_{\mathbb{R}^2} e^{-x^2 - y^2} \, dx \, dy.
+\end{align*}
+
+We then switch to Polar coordinates to resolve this integral, $x = r\cos \theta, y = r\sin \theta$.
+
+\begin{align*}
+I^2 = \int_{[0, 2\pi]} \int_{\mathbb{R}_{\ge 0}} r \cdot e^{-r^2} \, dr \, d\theta = \frac{1}{2} \int_{[0, 2\pi]} \, d\theta \, \int_{\mathbb{R}_{\ge 0}} e^{-u} \, du = \pi.
+\end{align*}
+
+Thus, $I = \sqrt{\pi}$.
+
+:::
+
+::: {#lem-schur}
+# Schur's Lemma
+Let $V$ and $W$ be irreducible representations of a group $G$ over an algebraically closed field. If $f: V \to W$ is a $G$-equivariant linear map, then either $f = 0$ or $f$ is an isomorphism. If $V = W$, then $f$ is a scalar multiple of the identity.
+:::
+
+::: {.proof key=@lem-check}
+Consider the kernel $\ker f$ and the image $\operatorname{im} f$ of the map $f$. Both are $G$-invariant subspaces, as $f$ is $G$-equivariant. Since $V$ is irreducible, $\ker f$ must be either ${0}$ or $V$. If $\ker f = V$, then $f = 0$. If $\ker f = {0}$, then $f$ is injective, and $\operatorname{im} f$ is a nonzero $G$-invariant subspace of the irreducible representation $W$, whence $\operatorname{im} f = W$ and $f$ is an isomorphism.
+
+Now suppose $V = W$. Since the field is algebraically closed, the endomorphism $f$ admits an eigenvalue $\lambda$. The map $f - \lambda \operatorname{id}_V$ is then a $G$-equivariant endomorphism with nontrivial kernel. By the preceding argument, it must be the zero map, so $f = \lambda \operatorname{id}_V$.
+:::
+
+::: {#cor-centralizer}
+For an irreducible representation $V$ of a finite group $G$ over $\mathbb{C}$, the centralizer algebra $\mathrm{End}_{G}(V)$ is one-dimensional, consisting only of scalar multiples of the identity.
+:::
+::: {.proof key=@cor-check}
+By Schur's lemma (@lem-schur), applied to the case where $V = W$, any $G$-equivariant endomorphism $f: V \to V$ is a scalar multiple of the identity. Thus, the algebra of $G$-endomorphisms, $$\operatorname{End}_G(V) = \{ f: V \to V \mid f(g \cdot v) = g \cdot f(v) \text{ for all } g \in G, v \in V \},$$ comprises precisely the scalar endomorphisms $\lambda \operatorname{id}_V$ for $\lambda \in \mathbb{C}$. This establishes that $\operatorname{End}_G(V)$ is one-dimensional over $\mathbb{C}$, as it is spanned by the identity map.
+:::
+
+::: {#cnj-bpp-p}
+# Aaronson-Ambainis Conjecture
+
+Let $p : \{\pm1\}^n \to [0, 1]$. Then there exists some $i \in [n]$ such that
+
+\begin{align*}
+    \mathbf{Inf}_i(p) \geq \left(\frac{\mathrm{Var}(p)}{\deg(p)}\right)^{O(1)}.
+\end{align*}
+
+:::
+
+::: {#thm-isoperimetric}
+# Isoperimetric Inequality
+
+A closed plane curve of length $2 \pi$ encloses an area $\le \pi$. Equality holds only for a circle.
+:::
+
+::: {.proof key=@thm-isoperimetric}
+
+We begin by considering a closed curve parametrized by arc length. Let $x(s), y(s)$ be the parametric representation of our curve, where $s$ denotes arc length with $0 \leq s \leq 2\pi$.
+We position the curve so that it intersects the $x$-axis at the endpoints of our parametrization interval. That is:
+$$y(0) = 0 = y(\pi) \tag{1}$$
+
+This positioning is always possible by a suitable rotation and translation of the coordinate system.
+
+Since we're using arc length parametrization, we have the fundamental constraint:
+$$\dot{x}^2(s) + \dot{y}^2(s) = 1 \tag{2}$$
+where the dot notation denotes differentiation with respect to $s$.
+
+The area enclosed by our parametrically defined curve is given by Green's theorem:
+$$A = \frac{1}{2} \oint_C (x \, dy - y \, dx) = \frac{1}{2} \int_0^{2\pi} (x \dot{y} - y \dot{x}) \, ds$$
+
+By Green's theorem, we can also write:
+$$A = \int_0^{2\pi} y \dot{x} \, ds \tag{3}$$
+
+Since $y(0) = 0$ and $y(\pi) = 0$, we can write:
+$$y(s) = u(s) \sin s \tag{4}$$
+where $u(s)$ is a bounded and differentiable function.
+
+**Why does this work?** For $0 < s < \pi$, we have $\sin s \neq 0$, so we can define $u(s) = \frac{y(s)}{\sin s}$. The boundary conditions $y(0) = y(\pi) = 0$ are automatically satisfied since $\sin 0 = \sin \pi = 0$. The function $u(s)$ can be extended continuously to the endpoints.
+
+Differentiating equation (4):
+$$\dot{y}(s) = \dot{u}(s) \sin s + u(s) \cos s \tag{5}$$
+
+We write the area integral as the sum of two parts:
+$$A = A_1 + A_2$$
+where, $A_1 = \int_0^{\pi} y \dot{x} \, ds$ (first half of the curve) and $A_2 = \int_{\pi}^{2\pi} y \dot{x} \, ds$ (second half of the curve).
+
+Lax shows that each $A_i \leq \frac{\pi}{2}$, which immediately gives us $A \leq \pi$.
+
+We apply the arithmetic-geometric mean inequality:
+$$ab \leq \frac{a^2 + b^2}{2}$$
+with equality if and only if $a = b$.
+
+Setting $a = y$ and $b = \dot{x}$,
+$$A_1 = \int_0^{\pi} y \dot{x} \, ds \leq \frac{1}{2} \int_0^{\pi} (y^2 + \dot{x}^2) \, ds. \tag{6}$$
+
+Using the arc length constraint $\dot{x}^2 + \dot{y}^2 = 1$, we get $\dot{x}^2 = 1 - \dot{y}^2$:
+$$A_1 \leq \frac{1}{2} \int_0^{\pi} (y^2 + 1 - \dot{y}^2) \, ds \tag{7}$$
+
+Now we substitute our parametrization $y(s) = u(s) \sin s$ and $\dot{y}(s) = \dot{u}(s) \sin s + u(s) \cos s$:
+
+$$A_1 \leq \frac{1}{2} \int_0^{\pi} [u^2 \sin^2 s + 1 - (\dot{u} \sin s + u \cos s)^2] \, ds$$
+
+Expanding the squared term:
+$$(\dot{u} \sin s + u \cos s)^2 = \dot{u}^2 \sin^2 s + 2\dot{u}u \sin s \cos s + u^2 \cos^2 s$$
+
+Therefore,
+$$A_1 \leq \frac{1}{2} \int_0^{\pi} [u^2 \sin^2 s + 1 - \dot{u}^2 \sin^2 s - 2\dot{u}u \sin s \cos s - u^2 \cos^2 s] \, ds$$
+
+Simplifying:
+$$A_1 \leq \frac{1}{2} \int_0^{\pi} [u^2(\sin^2 s - \cos^2 s) - \dot{u}^2 \sin^2 s - 2\dot{u}u \sin s \cos s + 1] \, ds \tag{8}$$
+
+The key step is to handle the term $2\dot{u}u \sin s \cos s$. Notice that,
+$$2\dot{u}u = \frac{d}{ds}(u^2)$$
+
+So we can integrate by parts:
+$$\int_0^{\pi} 2\dot{u}u \sin s \cos s \, ds = \int_0^{\pi} \frac{d}{ds}(u^2) \sin s \cos s \, ds$$
+
+Using integration by parts with $v = \sin s \cos s$ and $dv = (\cos^2 s - \sin^2 s) ds$:
+$$= [u^2 \sin s \cos s]_0^{\pi} - \int_0^{\pi} u^2(\cos^2 s - \sin^2 s) \, ds$$
+
+The boundary term vanishes since $\sin 0 = \sin \pi = 0$, leaving:
+$$= -\int_0^{\pi} u^2(\cos^2 s - \sin^2 s) \, ds$$
+
+Substituting back into equation (8),
+$$A_1 \leq \frac{1}{2} \int_0^{\pi} [u^2(\sin^2 s - \cos^2 s) - \dot{u}^2 \sin^2 s + u^2(\cos^2 s - \sin^2 s) + 1] \, ds$$
+
+The $u^2(\sin^2 s - \cos^2 s)$ terms cancel,
+$$A_1 \leq \frac{1}{2} \int_0^{\pi} (1 - \dot{u}^2 \sin^2 s) \, ds$$
+
+Since $\dot{u}^2 \sin^2 s \geq 0$, we have,
+$$A_1 \leq \frac{1}{2} \int_0^{\pi} 1 \, ds = \frac{\pi}{2}$$
+
+Equality holds in our estimate if and only if:
+
+1. **AM-GM equality**: $y = \dot{x}$, which means $y^2 = \dot{x}^2 = 1 - \dot{y}^2$
+2. **Maximum Bound**: $\dot{u} = 0$, which means $u(s)$ is constant
+
+If $u(s) = c$ (constant), then $y(s) = c \sin s$. 
+
+From condition 1: $y^2 = 1 - \dot{y}^2$, we get:
+$$c^2 \sin^2 s = 1 - c^2 \cos^2 s$$
+$$c^2(\sin^2 s + \cos^2 s) = 1$$
+$$c^2 = 1$$
+
+So $c = \pm 1$, giving us $y(s) = \pm \sin s$.
+
+When $y(s) = \sin s$, we have $\dot{y}(s) = \cos s$, and from $\dot{x}^2 + \dot{y}^2 = 1$:
+$$\dot{x}^2 = 1 - \cos^2 s = \sin^2 s$$
+
+So $\dot{x}(s) = \pm \sin s$. Taking $\dot{x}(s) = \sin s$ and integrating:
+$$x(s) = -\cos s + \text{constant}$$
+
+This gives us the parametrization of a semicircle!
+:::
+
+::: {#exr-cs-array}
+# Application of Cauchy's Inequality to an Array
+Show that if $\{a_{jk} \, \mid \, 1 \le j \le m, 1 \le k \le n\}$ is an array of real numbers then one has 
+\begin{align*}
+m \sum_{j = 1}^m \left(\sum_{k = 1}^n a_{j, k}\right)^2 + n \sum_{k = 1}^n \left(\sum_{j = 1}^m a_{jk}\right)^2 \le \left(\sum_{j = 1}^m \sum_{k = 1}^n a_{jk}\right)^2 + mn \sum_{j = 1}^m \sum_{k = 1}^n a_{jk}^2.
+\end{align*}
+Moreover, show that equality holds here if and only if there exist $\alpha_j$ and $\beta_k$ such that $a_{jk} = \alpha_j + \beta_k$ for all $1 \le j \le m$ and $1 \le k \le n$.
+:::
+
+::: {#sol-cs-array}
+
+Let $b_{j k} = \alpha_j + \beta_k$ with $$\alpha_j = \frac{1}{n} \sum_{ k = 1 }^n a_{ j k } \quad \beta_k = \frac{1}{m} \sum_{ j = 1 }^m a_{ j k }.$$ 
+
+Without loss of generality we may suppose $\sum_{ j, k } a_{ j k } = \sum_{ [m] } \alpha_j = \sum_{ [n] } \beta_k = 0$. Then note,
+
+\begin{align*}
+ 0 &\le \sum_{ j, k } ( a_{ j k } - b_{ j k } )^2 \\ &= \sum_{ j, k } { a_{ j k }^2 - 2 a_{ j k } b_{ j k } + b_{ j k }^2 } \\ &= \sum_{ j, k } a_{ j k }^2 - 2  \sum_{ j, k } a_{ j k } \alpha_j - 2  \sum_{ j, k } a_{ j k } \beta_k + \sum_{ j, k } { \alpha_j + \beta_k }^2 \\ &= \sum_{ j, k } a_{ j k }^2 - 2 n \sum_{ j } \alpha_j^2 - 2 m \sum_k \beta_k^2 + n \sum_j \alpha_j^2 + 2 \sum_{j, k } \alpha_j \beta_k + m \sum_k \beta_k^2 \\ \implies &\frac{1}{n} \sum_{ j } \alpha_j^2 + \frac{1}{m} \sum_k \beta_k^2 \le \sum_{ j, k } a_{ j k }^2. 
+\end{align*}
+
+The general result follows after an appropriate change of variables.
+
+:::
+
