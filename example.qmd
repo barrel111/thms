@@ -7,7 +7,7 @@ filters:
   - thms
 ---
 
-## A Potpurri of Environments
+## A Potpourri of Environments
 
 This filter adds proper theorem environments with collapsible proofs. 
 
