@@ -1,6 +1,6 @@
 # Thms for Quarto
 
-Thms: Nicely-formatted theorem environments for the web.
+Cleanly formatted theorem environments for the web.
 
 ## Installing
 
