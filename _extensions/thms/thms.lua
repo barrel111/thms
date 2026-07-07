@@ -6,20 +6,18 @@ local function better_thm(el)
 end
 
 local function better_proof(el)
-  local prefix_node = pandoc.Para({
-  })
-  print(el)
+  local prefix_node = pandoc.Para({})
   local paragraphs = el["__quarto_custom_node"].content[1].content[1].content
   table.insert(paragraphs, 1, prefix_node)
   return el
 end
 
 local function pcall_el(el, func)
-  local func_ret, err = pcall(func, el)
-  if err then
+  local ok, result = pcall(func, el)
+  if not ok then
     return el
   end
-  return func_ret
+  return result
 end
 
 -- Run in two passes so we process metadata

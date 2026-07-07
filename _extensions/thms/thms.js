@@ -1,12 +1,9 @@
-// Configuration
 const CONFIG = {
   storageKey: 'quarto-proof-states',
   expandedClass: 'expanded',
-  userToggledClass: 'user-toggled',
   proofSelector: '.proof'
 };
 
-// Utility functions
 function loadStates() {
   try {
     return JSON.parse(localStorage.getItem(CONFIG.storageKey) || '{}');
@@ -27,42 +24,42 @@ function saveStates(states) {
 function initializeProofs() {
   const states = loadStates();
   const proofs = document.querySelectorAll(CONFIG.proofSelector);
-  
+
   proofs.forEach(proof => {
     // Proofs should have a data-key attribute
     // Otherwise, eg- remarks/solutions, we use the id itself
     const id = proof.dataset.key || proof.id;
-    
+    const header = proof.querySelector('p:first-child');
+    if (!header) return;
+
     // Restore state without animation
     if (id && states[id] !== undefined) {
       proof.classList.toggle(CONFIG.expandedClass, states[id]);
     }
-    
-    // Add click handler
-    proof.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      proof.classList.add(CONFIG.userToggledClass);
+
+    function toggle() {
       const isExpanded = proof.classList.toggle(CONFIG.expandedClass);
-      if(id) {
+      if (id) {
         states[id] = isExpanded;
         saveStates(states);
       }
+    }
+
+    // Attach click only to the header, not the whole proof body
+    header.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggle();
     });
-    
+
     // Keyboard support
-    proof.setAttribute('tabindex', '0');
-    proof.addEventListener('keydown', function(e) {
+    header.setAttribute('tabindex', '0');
+    header.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        proof.click();
+        toggle();
       }
     });
   });
-  
-  // Remove loading class to show proofs
-  document.documentElement.classList.remove(CONFIG.loadingClass);
 }
 
 // Initialize when DOM is ready

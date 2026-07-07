@@ -1,5 +1,5 @@
 ---
-title: "Thms Example"
+title: "thms Example"
 format:
   html:
     mainfont: EB Garamond

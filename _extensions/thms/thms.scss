@@ -1,153 +1,113 @@
 /* ========================================
-   THEOREM ENVIRONMENT STYLES
+   COLOR VARIABLES
+   Customize any environment by overriding
+   these in your document's CSS.
    ======================================== */
 
-/* 
-   CUSTOMIZATION GUIDE:
-   
-   To customize colors, find the theorem type below and change:
-   - border-left-color: for the left border color
-   - background-color: for the background color
-   
-   To adjust spacing, modify the values in the base styles section.
-   To change the proof triangle, edit the ::before content.
-*/
+:root {
+  --thms-theorem-border:     #d63384;
+  --thms-theorem-bg:         #f8f9fa;
+  --thms-lemma-border:       #8b93d6;
+  --thms-lemma-bg:           rgba(79, 70, 229, 0.1);
+  --thms-corollary-border:   #7f95d1;
+  --thms-corollary-bg:       rgba(127, 149, 209, 0.15);
+  --thms-definition-border:  #9C4F4F;
+  --thms-definition-bg:      #F5EDED;
+  --thms-proposition-border: #5D478B;
+  --thms-proposition-bg:     #EDEAF5;
+  --thms-conjecture-border:  #6f42c1;
+  --thms-conjecture-bg:      #f8f9fa;
+  --thms-remark-border:      #4A406A;
+  --thms-remark-bg:          #F3F0F5;
+  --thms-example-border:     #4A704A;
+  --thms-example-bg:         #F5F6F5;
+  --thms-exercise-border:    #C07830;
+  --thms-exercise-bg:        #FDF5ED;
+  --thms-solution-border:    #2A7F7F;
+  --thms-solution-bg:        #EDF5F5;
+}
 
 /* ========================================
    BASE STYLES - All Theorem Types
    ======================================== */
 
-div.theorem, 
-div.lemma, 
-div.corollary, 
-div.definition, 
-div.proposition, 
-div.conjecture, 
-div.remark, 
-div.example {
+div.theorem,
+div.lemma,
+div.corollary,
+div.definition,
+div.proposition,
+div.conjecture,
+div.remark,
+div.example,
+div.exercise,
+div.solution {
   border-left: 4px solid;
   background-color: #f8f9fa;
   padding: 15px;
   margin: 15px 0;
   border-radius: 0 4px 4px 0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  > p:first-child {
+    margin-top: 0;
+    strong {
+      font-weight: bold;
+      color: #212529;
+    }
+  }
+
+  > p:last-of-type {
+    margin-bottom: 0;
+  }
+
+  p {
+    line-height: 1.4em;
+    margin-bottom: 0.25em;
+  }
+
+  .math {
+    margin: 10px 0;
+  }
+
+  .katex, .MathJax, mjx-container {
+    font-size: 1em;
+  }
 }
 
 /* ========================================
    THEOREM TYPE COLORS
    ======================================== */
 
-/* Theorem - Pink/Magenta */
-div.theorem {
-  border-left-color: #d63384;
-}
-
-/* Lemma - Blue */
-div.lemma {
-  border-left-color: #8b93d6;
-  background-color: rgba(79, 70, 229, 0.1);
-}
-
-/* Corollary - Light Purple */
-div.corollary {
-  border-left-color: #7f95d1;
-  background-color: rgba(127, 149, 209, 0.15);
-}
-
-/* Definition - Red */
-div.definition {
-  border-left-color: #9C4F4F;
-  background-color: #F5EDED;
-}
-
-/* Proposition - Dark Blue */
-div.proposition {
-  border-left-color: #5D478B;
-  background-color: #EDEAF5;
-}
-
-/* Conjecture - Purple (inherits base background) */
-div.conjecture {
-  border-left-color: #6f42c1;
-}
-
-/* Remark - Dark Gray */
-div.remark {
-  border-left-color: #4A406A;
-  background-color: #F3F0F5;
-}
-
-/* Example - Green */
-div.example {
-  border-left-color: #4A704A;
-  background-color: #F5F6F5;
-}
-
-/* ========================================
-   THEOREM CONTENT STYLING
-   ======================================== */
-
-/* Title styling for all theorem types */
-div.theorem > p:first-child strong,
-div.lemma > p:first-child strong,
-div.corollary > p:first-child strong,
-div.definition > p:first-child strong,
-div.proposition > p:first-child strong,
-div.conjecture > p:first-child strong,
-div.remark > p:first-child strong,
-div.example > p:first-child strong {
-  font-weight: bold;
-  color: #212529;
-}
-
-/* Remove top margin from first paragraph */
-div.theorem > p:first-child,
-div.lemma > p:first-child,
-div.corollary > p:first-child,
-div.definition > p:first-child,
-div.proposition > p:first-child,
-div.conjecture > p:first-child,
-div.remark > p:first-child,
-div.example > p:first-child {
-  margin-top: 0;
-}
-
-/* Remove bottom margin from last paragraph */
-div.theorem > p:last-of-type,
-div.lemma > p:last-of-type,
-div.corollary > p:last-of-type,
-div.definition > p:last-of-type,
-div.proposition > p:last-of-type,
-div.conjecture > p:last-of-type,
-div.remark > p:last-of-type,
-div.example > p:last-of-type {
-  margin-bottom: 0;
-}
-
-/* Math content spacing */
-div.theorem .math,
-div.lemma .math,
-div.corollary .math,
-div.definition .math,
-div.proposition .math,
-div.conjecture .math,
-div.remark .math,
-div.example .math {
-  margin: 10px 0;
-}
+div.theorem    { border-left-color: var(--thms-theorem-border);     background-color: var(--thms-theorem-bg); }
+div.lemma      { border-left-color: var(--thms-lemma-border);       background-color: var(--thms-lemma-bg); }
+div.corollary  { border-left-color: var(--thms-corollary-border);   background-color: var(--thms-corollary-bg); }
+div.definition { border-left-color: var(--thms-definition-border);  background-color: var(--thms-definition-bg); }
+div.proposition{ border-left-color: var(--thms-proposition-border); background-color: var(--thms-proposition-bg); }
+div.conjecture { border-left-color: var(--thms-conjecture-border);  background-color: var(--thms-conjecture-bg); }
+div.remark     { border-left-color: var(--thms-remark-border);      background-color: var(--thms-remark-bg); }
+div.example    { border-left-color: var(--thms-example-border);     background-color: var(--thms-example-bg); }
+div.exercise   { border-left-color: var(--thms-exercise-border);    background-color: var(--thms-exercise-bg); }
+div.solution   { border-left-color: var(--thms-solution-border);    background-color: var(--thms-solution-bg); }
+div.solution.proof { margin-left: 0; padding-left: 0.5em; }
 
 /* ========================================
    PROOF STYLING
    ======================================== */
 
-/* Proof container - clean, minimal styling */
 .proof:not(.remark) {
   margin: 15px 0;
   margin-left: 0.5em;
   padding: 0;
+
+  .katex, .MathJax, mjx-container {
+    font-size: 1em;
+  }
+
+  .math {
+    margin: 10px 0;
+  }
 }
 
-/* Proof title - clickable header */
 .proof > p:first-child {
   font-weight: normal;
   font-style: italic;
@@ -161,7 +121,12 @@ div.example .math {
   line-height: 1.4;
 }
 
-/* Hover effect for proof title */
+div.remark > p:first-child,
+div.remark > p:first-child em {
+  font-weight: bold;
+  font-style: normal;
+}
+
 .proof:not(.remark) > p:first-child:hover {
   opacity: 0.7;
 }
@@ -183,7 +148,8 @@ div.example .math {
 
 /* Hide proof content by default */
 .proof:not(.remark) > *:not(:first-child) {
-  display: none;
+  height: 0;
+  overflow: hidden;
   margin: 0;
   padding: 0;
   padding-left: 1em;
@@ -191,7 +157,8 @@ div.example .math {
 
 /* Show proof content when expanded */
 .proof.expanded:not(.remark) > *:not(:first-child) {
-  display: block;
+  height: auto;
+  overflow: visible;
   margin-top: 10px;
   animation: fadeIn 0.3s ease;
 }
@@ -206,13 +173,13 @@ div.example .math {
    ======================================== */
 
 @keyframes fadeIn {
-  from { 
-    opacity: 0; 
-    transform: translateY(-5px); 
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
   }
-  to { 
-    opacity: 1; 
-    transform: translateY(0); 
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -220,33 +187,14 @@ div.example .math {
    PROOF UTILITIES
    ======================================== */
 
-/* QED symbol styling */
 .proof .qed {
   float: right;
   font-weight: bold;
   color: #495057;
 }
 
-/* Clear floats after proof */
 .proof::after {
   content: "";
   display: table;
   clear: both;
 }
-
-/* ========================================
-   GLOBAL TYPOGRAPHY
-   ======================================== */
-
-/* Base paragraph styling */
-p {
-  line-height: 1.4em;
-  margin-bottom: 0.25em;
-}
-
-/* KaTeX, MathJax math font size override */
-.katex, .MathJax, mjx-container { 
-  font-size: 1em !important; 
-}
-
-
