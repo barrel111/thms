@@ -90,7 +90,12 @@ div.remark     { border-left-color: var(--thms-remark-border);      background-c
 div.example    { border-left-color: var(--thms-example-border);     background-color: var(--thms-example-bg); }
 div.exercise   { border-left-color: var(--thms-exercise-border);    background-color: var(--thms-exercise-bg); }
 div.solution   { border-left-color: var(--thms-solution-border);    background-color: var(--thms-solution-bg); }
-div.solution.proof { margin-left: 0; padding-left: 0.5em; }
+div.solution.proof { margin-left: 0; padding: 0 0.5em; }
+
+/* Heading layout is presentation, not an insertion into the document AST. */
+.theorem > p:first-child > .theorem-title {
+  display: block;
+}
 
 /* Proofs remain readable until JavaScript installs their controls. */
 .proof:not(.remark) {
@@ -100,14 +105,47 @@ div.solution.proof { margin-left: 0; padding-left: 0.5em; }
 
 .proof > p:first-child {
   font-weight: normal;
-  font-style: italic;
+  font-style: normal;
   margin: 0;
   padding: 0;
   line-height: 1.4;
 }
 
-div.remark > p:first-child,
-div.remark > p:first-child em {
+.thms-proof-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25em;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Keep the label's vertical padding inside the clickable button. */
+.solution > .thms-proof-header {
+  align-items: center;
+  line-height: 1;
+
+  .thms-proof-toggle {
+    align-items: center;
+    padding-block: 11px;
+  }
+
+  .thms-proof-label,
+  .thms-proof-indicator,
+  .proof-title {
+    text-box: trim-both cap alphabetic;
+  }
+}
+
+.solution > .thms-proof-body {
+  padding-bottom: 11px;
+}
+
+.proof > p:first-child > .proof-title {
+  display: block;
+}
+
+div.remark > p:first-child > .proof-title,
+div.remark > p:first-child > .proof-title em {
   font-weight: bold;
   font-style: normal;
 }
@@ -115,8 +153,12 @@ div.remark > p:first-child em {
 .thms-proof-toggle {
   appearance: none;
   display: inline-flex;
+  flex-shrink: 0;
   align-items: baseline;
-  gap: 8px;
+  justify-content: center;
+  gap: 0.25em;
+  min-width: 24px;
+  min-height: 24px;
   border: 0;
   border-radius: 2px;
   padding: 0;
@@ -142,6 +184,9 @@ div.remark > p:first-child em {
 
 .thms-proof-indicator {
   display: inline-block;
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
   color: #6c757d;
   font-size: 0.8em;
 }
@@ -181,7 +226,7 @@ div.remark > p:first-child em {
     display: flow-root !important;
   }
 
-  .thms-proof-indicator {
+  .thms-proof-toggle {
     display: none;
   }
 }

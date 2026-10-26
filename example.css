@@ -1,0 +1,24 @@
+/* on larger screens move content more towards the left */
+@media (min-width: 992px) {
+  #quarto-content.page-layout-article {
+    display: block;
+    max-width: 800px;
+    margin-left: 10vw;
+    margin-right: 32px;
+  }
+
+  /* center title */
+  #title-block-header {
+    width: 80vw;
+    max-width: none;
+  }
+}
+
+#title-block-header {
+  text-align: center;
+}
+
+/* leave some room at the end */
+#quarto-document-content {
+  padding-bottom: 2rem;
+}

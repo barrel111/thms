@@ -1,8 +1,8 @@
 # thms for Quarto
 
-Colored theorem environments and collapsible proofs and solutions for Quarto
-HTML documents. Requires Quarto 1.7.0 or later. PDF and Word output are not
-supported by this theme.
+Colored theorem environments and collapsible proofs and solutions for Quarto HTML documents. 
+Requires Quarto 1.7.0 or later. 
+PDF and Word output are not supported by this theme.
 
 ## Install
 
@@ -10,9 +10,7 @@ supported by this theme.
 quarto add barrel111/thms
 ```
 
-Commit the installed `_extensions` directory with your document source. The
-extension ships SCSS and JavaScript. Quarto compiles the SCSS into CSS during
-rendering; no separate Sass installation or asset build is required.
+Commit the installed `_extensions` directory with your document source. 
 
 ## Use
 
@@ -22,12 +20,9 @@ Select the extension's HTML format in your document's YAML:
 format: thms-html
 ```
 
-The format loads both the SCSS theme and the filter. When upgrading from the
-filter-only setup, replace `format: html` with `format: thms-html` and remove
-`thms` from `filters` to avoid loading it twice. Existing HTML options belong
-under the `thms-html` key (see the customization example below). If you override
-`theme`, include `thms.scss` from the installed extension directory in your
-theme list so the theorem styles are still compiled.
+The format loads both the SCSS theme and the filter. 
+Existing HTML options belong under the `thms-html` key (see the customization example below). 
+If you override `theme`, include `thms.scss` from the installed extension directory in your theme list so the theorem styles are still compiled.
 
 Write Quarto theorem environments and proofs as usual:
 
@@ -41,16 +36,13 @@ Write the integer as 2k. Its square is 2(2k²), which is even.
 :::
 ```
 
-Quarto supplies the numbering and cross-references. This extension styles
-theorems, lemmas, corollaries, definitions, propositions, conjectures, remarks,
-examples, exercises, and solutions. Remarks always remain visible and have no
-toggle control.
+## A Few Notes
 
-## Expansion and saved state
+This extension styles theorems, lemmas, corollaries, definitions, propositions, conjectures, remarks, examples, exercises, and solutions. 
 
-Proofs and solutions start collapsed after their controls initialize. Click a
-heading or focus its button and press Enter or Space to toggle it. To start a
-proof open, add `.expanded`:
+Proofs and solutions start collapsed after their controls initialize. 
+Click the arrow or the “Proof” / “Solution” label to toggle it. The parenthesized title stays separate; clicking its links follows them without toggling the proof.
+To start a proof/solution expanded, add `.expanded`:
 
 ```markdown
 ::: {.proof .expanded key=another-proof}
@@ -58,26 +50,22 @@ Proof text.
 :::
 ```
 
+Remarks always remain visible and have no toggle control.
+
 Solutions also accept `.expanded`, for example `::: {#sol-answer .expanded}`.
-A saved choice takes precedence over this default.
 
-Give each proof a stable `key` that is unique within the page. The extension
-uses that key, or the environment's HTML ID if no key is supplied. Numbered
-solutions already have an ID such as `sol-answer`. Without either, toggling
-still works but the choice is not saved.
+The user can provide proofs with a `key` which must be unique within the page-- this allows us to store whether it has been expanded across multiple visits. 
 
-Choices are stored in the browser's `localStorage`, separately for each page
-pathname and origin. They do not sync across devices; moving a page to a new
-path starts fresh. This version replaces the previous shared storage key, so
-previously saved expansion choices reset on upgrade.
+Proof titles may contain links or cross-references too.
 
-Unavailable storage or invalid saved data does not prevent toggling. Without
-JavaScript, content stays visible. Printing includes every proof and solution,
-regardless of its screen state.
+```markdown
+::: {.proof key=even-square}
+# For @thm-even-square
+Write the integer as 2k. Its square is 2(2k²), which is even.
+:::
+```
 
-## Customize colors
-
-Add a stylesheet through your document's YAML:
+You can modify the colors by adding a stylesheet through your document's YAML:
 
 ```yaml
 format:
@@ -85,7 +73,7 @@ format:
     css: custom.css
 ```
 
-Override the environment variables in `custom.css`:
+Then override the CSS custom properties in `custom.css`:
 
 ```css
 :root {
@@ -103,9 +91,12 @@ variables, where `<type>` is `theorem`, `lemma`, `corollary`, `definition`,
 ## Example
 
 [example.qmd](example.qmd) contains a short example of every environment,
-including a proof that starts expanded, cross-references, display equations,
-and a solution containing a list.
+including a proof that starts expanded, cross-references, and display equations.
+
+[View the example screenshot](thms-example.png).
 
 ```sh
 quarto preview example.qmd
 ```
+
+
