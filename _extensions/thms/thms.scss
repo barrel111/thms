@@ -1,9 +1,6 @@
-/* ========================================
-   COLOR VARIABLES
-   Customize any environment by overriding
-   these in your document's CSS.
-   ======================================== */
+/*-- scss:rules --*/
 
+/* Override these variables in your document stylesheet to customize colors. */
 :root {
   --thms-theorem-border:     #d63384;
   --thms-theorem-bg:         #f8f9fa;
@@ -27,10 +24,6 @@
   --thms-solution-bg:        #EDF5F5;
 }
 
-/* ========================================
-   BASE STYLES - All Theorem Types
-   ======================================== */
-
 div.theorem,
 div.lemma,
 div.corollary,
@@ -50,6 +43,7 @@ div.solution {
 
   > p:first-child {
     margin-top: 0;
+
     strong {
       font-weight: bold;
       color: #212529;
@@ -64,19 +58,27 @@ div.solution {
     line-height: 1.4em;
     margin-bottom: 0.25em;
   }
+}
 
+div.theorem,
+div.lemma,
+div.corollary,
+div.definition,
+div.proposition,
+div.conjecture,
+div.remark,
+div.example,
+div.exercise,
+div.solution,
+.proof {
   .math {
     margin: 10px 0;
   }
 
-  .katex, .MathJax, mjx-container {
+  :is(.katex, .MathJax, mjx-container) {
     font-size: 1em;
   }
 }
-
-/* ========================================
-   THEOREM TYPE COLORS
-   ======================================== */
 
 div.theorem    { border-left-color: var(--thms-theorem-border);     background-color: var(--thms-theorem-bg); }
 div.lemma      { border-left-color: var(--thms-lemma-border);       background-color: var(--thms-lemma-bg); }
@@ -90,22 +92,10 @@ div.exercise   { border-left-color: var(--thms-exercise-border);    background-c
 div.solution   { border-left-color: var(--thms-solution-border);    background-color: var(--thms-solution-bg); }
 div.solution.proof { margin-left: 0; padding-left: 0.5em; }
 
-/* ========================================
-   PROOF STYLING
-   ======================================== */
-
+/* Proofs remain readable until JavaScript installs their controls. */
 .proof:not(.remark) {
-  margin: 15px 0;
-  margin-left: 0.5em;
+  margin: 15px 0 15px 0.5em;
   padding: 0;
-
-  .katex, .MathJax, mjx-container {
-    font-size: 1em;
-  }
-
-  .math {
-    margin: 10px 0;
-  }
 }
 
 .proof > p:first-child {
@@ -113,11 +103,6 @@ div.solution.proof { margin-left: 0; padding-left: 0.5em; }
   font-style: italic;
   margin: 0;
   padding: 0;
-  cursor: pointer;
-  user-select: none;
-  position: relative;
-  background-color: transparent;
-  transition: opacity 0.2s ease;
   line-height: 1.4;
 }
 
@@ -127,65 +112,56 @@ div.remark > p:first-child em {
   font-style: normal;
 }
 
-.proof:not(.remark) > p:first-child:hover {
-  opacity: 0.7;
+.thms-proof-toggle {
+  appearance: none;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  border: 0;
+  border-radius: 2px;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+  }
+
+  &[aria-expanded="true"] > .thms-proof-indicator {
+    transform: rotate(90deg);
+  }
 }
 
-/* Triangle indicator - shows expand/collapse state */
-.proof:not(.remark) > p:first-child::before {
-  content: "▶";
+.thms-proof-indicator {
   display: inline-block;
-  margin-right: 8px;
-  transition: transform 0.3s ease;
   color: #6c757d;
   font-size: 0.8em;
 }
 
-/* Rotate triangle when proof is expanded */
-.proof.expanded:not(.remark) > p:first-child::before {
-  transform: rotate(90deg);
-}
-
-/* Hide proof content by default */
-.proof:not(.remark) > *:not(:first-child) {
-  height: 0;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
+.thms-proof-body {
   padding-left: 1em;
-}
+  display: flow-root;
 
-/* Show proof content when expanded */
-.proof.expanded:not(.remark) > *:not(:first-child) {
-  height: auto;
-  overflow: visible;
-  margin-top: 10px;
-  animation: fadeIn 0.3s ease;
-}
-
-/* Remove extra margin from first content element */
-.proof:not(.remark) > p:first-child + * {
-  margin-top: 0;
-}
-
-/* ========================================
-   ANIMATIONS
-   ======================================== */
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-5px);
+  > :first-child {
+    margin-top: 0;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  &[hidden] {
+    display: none;
   }
 }
-
-/* ========================================
-   PROOF UTILITIES
-   ======================================== */
 
 .proof .qed {
   float: right;
@@ -197,4 +173,15 @@ div.remark > p:first-child em {
   content: "";
   display: table;
   clear: both;
+}
+
+/* Print every proof, independently of its saved screen state. */
+@media print {
+  .proof > .thms-proof-body[hidden] {
+    display: flow-root !important;
+  }
+
+  .thms-proof-indicator {
+    display: none;
+  }
 }

@@ -1,28 +1,111 @@
-# thms for quarto
+# thms for Quarto
 
-Cleanly formatted theorem environments for the web.
+Colored theorem environments and collapsible proofs and solutions for Quarto
+HTML documents. Requires Quarto 1.7.0 or later. PDF and Word output are not
+supported by this theme.
 
-## installing
+## Install
 
-```bash
+```sh
 quarto add barrel111/thms
 ```
 
-This will install the extension under the `_extensions` subdirectory. If you're using version control, you will want to check in this directory.
+Commit the installed `_extensions` directory with your document source. The
+extension ships SCSS and JavaScript. Quarto compiles the SCSS into CSS during
+rendering; no separate Sass installation or asset build is required.
 
-## using
+## Use
 
-The extension uses the theorem and proof divs that Quarto already provides. The extension provides a theme for all the environments as well as support for collapsible proof (and solution) environments. For the page to remember which proof was collapsed by the user between multiple visits, we need to store some state locally for each proof. Quarto proofs are implemented using a class and the fenced divs break when an additional id is provided. So, for this functionality to work one should label the proof with a key attribute.
+Select the extension's HTML format in your document's YAML:
 
-```md
-::: {.proof key=thmproof}
+```yaml
+format: thms-html
+```
+
+The format loads both the SCSS theme and the filter. When upgrading from the
+filter-only setup, replace `format: html` with `format: thms-html` and remove
+`thms` from `filters` to avoid loading it twice. Existing HTML options belong
+under the `thms-html` key (see the customization example below). If you override
+`theme`, include `thms.scss` from the installed extension directory in your
+theme list so the theorem styles are still compiled.
+
+Write Quarto theorem environments and proofs as usual:
+
+```markdown
+::: {#thm-even-square}
+The square of an even integer is even.
+:::
+
+::: {.proof key=even-square}
+Write the integer as 2k. Its square is 2(2k²), which is even.
 :::
 ```
 
-## example
+Quarto supplies the numbering and cross-references. This extension styles
+theorems, lemmas, corollaries, definitions, propositions, conjectures, remarks,
+examples, exercises, and solutions. Remarks always remain visible and have no
+toggle control.
 
-Here is the source code for a minimal example: [example.qmd](example.qmd).
+## Expansion and saved state
 
-The example page is rendered as follows.
+Proofs and solutions start collapsed after their controls initialize. Click a
+heading or focus its button and press Enter or Space to toggle it. To start a
+proof open, add `.expanded`:
 
-![Example rendering](thms-example.jpeg)
+```markdown
+::: {.proof .expanded key=another-proof}
+Proof text.
+:::
+```
+
+Solutions also accept `.expanded`, for example `::: {#sol-answer .expanded}`.
+A saved choice takes precedence over this default.
+
+Give each proof a stable `key` that is unique within the page. The extension
+uses that key, or the environment's HTML ID if no key is supplied. Numbered
+solutions already have an ID such as `sol-answer`. Without either, toggling
+still works but the choice is not saved.
+
+Choices are stored in the browser's `localStorage`, separately for each page
+pathname and origin. They do not sync across devices; moving a page to a new
+path starts fresh. This version replaces the previous shared storage key, so
+previously saved expansion choices reset on upgrade.
+
+Unavailable storage or invalid saved data does not prevent toggling. Without
+JavaScript, content stays visible. Printing includes every proof and solution,
+regardless of its screen state.
+
+## Customize colors
+
+Add a stylesheet through your document's YAML:
+
+```yaml
+format:
+  thms-html:
+    css: custom.css
+```
+
+Override the environment variables in `custom.css`:
+
+```css
+:root {
+  --thms-theorem-border: #245a81;
+  --thms-theorem-bg: #edf5fb;
+  --thms-solution-border: #2a7f7f;
+  --thms-solution-bg: #edf5f5;
+}
+```
+
+Each styled environment has `--thms-<type>-border` and `--thms-<type>-bg`
+variables, where `<type>` is `theorem`, `lemma`, `corollary`, `definition`,
+`proposition`, `conjecture`, `remark`, `example`, `exercise`, or `solution`.
+
+## Example
+
+[example.qmd](example.qmd) contains a short example of every environment,
+including a proof that starts expanded, cross-references, display equations,
+and a solution containing a list.
+
+```sh
+quarto preview example.qmd
+```

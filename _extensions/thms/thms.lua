@@ -28,8 +28,7 @@ return {
       -- Files are relative to the extension directory
       quarto.doc.add_html_dependency({
         name = "thms",
-        version = "1.0.0",
-        stylesheets = { "thms.scss" },
+        version = "1.1.0",
         scripts = { "thms.js" }
       })
       return meta
