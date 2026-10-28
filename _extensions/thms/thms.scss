@@ -208,6 +208,17 @@ div.remark > p:first-child > .proof-title em {
   }
 }
 
+/* Keep the end-of-proof box inside the body so it collapses with the proof. */
+.proof:not(.solution) > .thms-proof-body::after {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  width: 0.65em;
+  height: 0.65em;
+  margin: 0.5em 0 0 auto;
+  border: 1px solid currentColor;
+}
+
 .proof .qed {
   float: right;
   font-weight: bold;

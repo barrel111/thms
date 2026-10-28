@@ -1,5 +1,7 @@
 # thms for Quarto
 
+> The current iteration relied heavily on AI assistance to rework and simplify an existing implementation, fix bugs, and improve accessibility and behavior.
+
 Colored theorem environments and collapsible proofs and solutions for Quarto HTML documents. 
 Requires Quarto 1.7.0 or later. 
 PDF and Word output are not supported by this theme.
