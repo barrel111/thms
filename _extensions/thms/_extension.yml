@@ -8,6 +8,13 @@ contributes:
   formats:
     html:
       theme: [default, thms.scss]
+      crossref:
+        custom:
+          - kind: float
+            key: prb
+            reference-prefix: Problem
+            caption-location: top
       filters:
-        - thms.lua
+        - path: thms.lua
+          at: pre-ast
 

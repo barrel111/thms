@@ -9,6 +9,15 @@ format:
 
 This filter adds theorem environments with collapsible proofs. 
 
+::: {#prb-distinct-elements}
+# Distinct Elements
+
+Given a stream of elements from $[n]$, estimate the number of distinct elements
+to relative error at most $\varepsilon$, with probability at least $1-\delta$.
+:::
+
+The statement of @prb-distinct-elements is free-form; it needs no Input/Output fields.
+
 ::: {#def-ac}
 An $M$-alternating component is an edge set that forms a connected subgraph of $G$ of maximum degree $2$, in which every degree-$2$ vertex belongs to exactly one edge of $M$.
 :::

@@ -40,7 +40,25 @@ Write the integer as 2k. Its square is 2(2k²), which is even.
 
 ## A Few Notes
 
-This extension styles theorems, lemmas, corollaries, definitions, propositions, conjectures, remarks, examples, exercises, and solutions. 
+This extension styles theorems, lemmas, corollaries, definitions, propositions, conjectures, remarks, examples, exercises, solutions, and problems.
+
+Problems have free-form bodies. Use a `prb-` identifier for numbering and
+cross-references, and an optional heading for the problem's name:
+
+```markdown
+::: {#prb-distinct-elements}
+# Distinct Elements
+
+Estimate the number of distinct elements in the stream.
+:::
+
+See @prb-distinct-elements.
+```
+
+The name appears in small caps with spaces replaced by hyphens
+(“Distinct-Elements”); math and inline formatting are preserved.
+Use `::: {.problem}` for an unnumbered problem, with the same optional heading.
+Problems remain visible and have no toggle control.
 
 Proofs and solutions start collapsed after their controls initialize. 
 Click the arrow or the “Proof” / “Solution” label to toggle it. The parenthesized title stays separate; clicking its links follows them without toggling the proof.
@@ -88,7 +106,7 @@ Then override the CSS custom properties in `custom.css`:
 
 Each styled environment has `--thms-<type>-border` and `--thms-<type>-bg`
 variables, where `<type>` is `theorem`, `lemma`, `corollary`, `definition`,
-`proposition`, `conjecture`, `remark`, `example`, `exercise`, or `solution`.
+`proposition`, `conjecture`, `remark`, `example`, `exercise`, `solution`, or `problem`.
 
 ## Example
 

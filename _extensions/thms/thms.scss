@@ -22,6 +22,8 @@
   --thms-exercise-bg:        #FDF5ED;
   --thms-solution-border:    #2A7F7F;
   --thms-solution-bg:        #EDF5F5;
+  --thms-problem-border:     #536878;
+  --thms-problem-bg:         #F0F3F5;
 }
 
 div.theorem,
@@ -33,6 +35,7 @@ div.conjecture,
 div.remark,
 div.example,
 div.exercise,
+div.problem,
 div.solution {
   border-left: 4px solid;
   background-color: #f8f9fa;
@@ -69,6 +72,7 @@ div.conjecture,
 div.remark,
 div.example,
 div.exercise,
+div.problem,
 div.solution,
 .proof {
   .math {
@@ -89,12 +93,44 @@ div.conjecture { border-left-color: var(--thms-conjecture-border);  background-c
 div.remark     { border-left-color: var(--thms-remark-border);      background-color: var(--thms-remark-bg); }
 div.example    { border-left-color: var(--thms-example-border);     background-color: var(--thms-example-bg); }
 div.exercise   { border-left-color: var(--thms-exercise-border);    background-color: var(--thms-exercise-bg); }
+div.problem    { border-left-color: var(--thms-problem-border);     background-color: var(--thms-problem-bg); }
 div.solution   { border-left-color: var(--thms-solution-border);    background-color: var(--thms-solution-bg); }
 div.solution.proof { margin-left: 0; padding: 0 0.5em; }
 
 /* Heading layout is presentation, not an insertion into the document AST. */
 .theorem > p:first-child > .theorem-title {
   display: block;
+}
+
+/* A problem's name is hyphenated by the filter; only its name uses small caps. */
+.thms-problem-name {
+  font-variant-caps: all-small-caps;
+}
+
+.thms-problem-title {
+  display: block;
+}
+
+div.problem {
+  text-align: left;
+
+  > figure.quarto-float-prb {
+    display: block;
+    margin: 0;
+
+    > div {
+      text-align: left;
+    }
+
+    > figcaption.quarto-float-prb {
+      padding: 0;
+      margin: 0 0 0.25em;
+      color: inherit;
+      font-size: inherit;
+      font-weight: bold;
+      text-align: left;
+    }
+  }
 }
 
 /* Proofs remain readable until JavaScript installs their controls. */
