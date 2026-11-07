@@ -17,4 +17,6 @@ contributes:
       filters:
         - path: thms.lua
           at: pre-ast
+        - path: problem-refs.lua
+          at: post-render
 

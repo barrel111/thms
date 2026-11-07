@@ -22,8 +22,8 @@
   --thms-exercise-bg:        #FDF5ED;
   --thms-solution-border:    #2A7F7F;
   --thms-solution-bg:        #EDF5F5;
-  --thms-problem-border:     #536878;
-  --thms-problem-bg:         #F0F3F5;
+  --thms-problem-border:     #1B365D;
+  --thms-problem-bg:         #EEF2F8;
 }
 
 div.theorem,
@@ -104,7 +104,8 @@ div.solution.proof { margin-left: 0; padding: 0 0.5em; }
 
 /* A problem's name is hyphenated by the filter; only its name uses small caps. */
 .thms-problem-name {
-  font-variant-caps: all-small-caps;
+  font-variant-caps: small-caps;
+  font-weight: 500;
 }
 
 .thms-problem-title {

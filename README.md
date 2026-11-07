@@ -57,6 +57,9 @@ See @prb-distinct-elements.
 
 The name appears in small caps with spaces replaced by hyphens
 (“Distinct-Elements”); math and inline formatting are preserved.
+References within the page, such as `@prb-distinct-elements`, display the problem's name with
+the same small caps and hyphens. An unnamed problem uses its numbered label
+(for example, “Problem 1”).
 Use `::: {.problem}` for an unnumbered problem, with the same optional heading.
 Problems remain visible and have no toggle control.
 
